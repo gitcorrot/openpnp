@@ -448,6 +448,13 @@ public class JogControlsPanel extends JPanel {
         btnRecycle.setText(Translations.getString("JogControlsPanel.btnRecycle.text")); //$NON-NLS-1$
         panelSpecial.add(btnRecycle);
 
+        JButton btnOpenProgrammatorToolbox = new JButton(openProgrammerToolboxAction);
+        btnOpenProgrammatorToolbox.setEnabled(true);
+        btnOpenProgrammatorToolbox.setToolTipText(Translations.getString("JogControlsPanel.btnOpenProgrammerToolbox.toolTipText")); //$NON-NLS-1$
+        btnOpenProgrammatorToolbox.setText(Translations.getString("JogControlsPanel.btnOpenProgrammerToolbox.text")); //$NON-NLS-1$
+        panelSpecial.add(btnOpenProgrammatorToolbox);
+        
+        
         panelActuators = new JPanel();
         tabbedPane_1.addTab(Translations.getString("JogControlsPanel.Tab.Actuators"), null, panelActuators, null); //$NON-NLS-1$
         panelActuators.setLayout(new WrapLayout(WrapLayout.LEFT));
@@ -670,7 +677,18 @@ public class JogControlsPanel extends JPanel {
             });
         }
     };
-
+    
+  @SuppressWarnings("serial")
+  public Action openProgrammerToolboxAction = new AbstractAction(Translations.getString("JogControlsPanel.Action.OpenProgrammerToolbox")) { 
+  	@Override
+      public void actionPerformed(ActionEvent arg0) {
+          UiUtils.submitUiMachineTask(() -> {
+              // TODO: Implement running script
+          	String scripts_dir_path = Configuration.get().getScripting().getScriptsDirectory().getAbsolutePath();
+          	Configuration.get().getScripting().execute(String.format("%s/%s", scripts_dir_path, "programator.py"));
+          });
+      }
+  };
 
     @SuppressWarnings("serial")
     public Action raiseIncrementAction = new AbstractAction(Translations.getString("JogControlsPanel.Action.RaiseJogIncrement")) { //$NON-NLS-1$
